@@ -6,11 +6,19 @@ import { ErrorType } from "@/types/ErrorType";
 
 export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
-    const { token, id } = reqBody;
+    const { token } = reqBody;
+    if (!token) {
+        return NextResponse.json(
+            { message: "token is required" },
+            {
+                status: HTTP_ERROR_CODES.BAD_REQUEST,
+            },
+        );
+    }
     try {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
             where: {
-                id: id,
+                verificationToken: token,
             },
         });
         if (!user) {
@@ -45,7 +53,7 @@ export const POST = async (request: NextRequest) => {
         }
         await prisma.user.update({
             where: {
-                id: id,
+                id: user.id,
             },
             data: {
                 isverified: true,

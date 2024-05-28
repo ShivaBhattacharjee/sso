@@ -6,31 +6,28 @@ import { HTTP_ERROR_CODES } from "@/enums/enum";
 import { ErrorType } from "@/types/ErrorType";
 export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
-    const { email } = reqBody;
-    if (!email) {
-        return NextResponse.json({ message: "Email body params is required" }, { status: HTTP_ERROR_CODES.UNAUTHORIZED });
-    }
+    const { token, password } = reqBody;
     try {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
             where: {
-                email: email,
+                forgotPasswordToken: token,
             },
         });
         if (!user) {
             return NextResponse.json({ message: "User not found" }, { status: HTTP_ERROR_CODES.NOT_FOUND });
         }
-        if (user.forgotPasswordTokenExpiry && user.forgotPasswordTokenExpiry < new Date()) {
-            return NextResponse.json({ message: "Token is expired" }, { status: HTTP_ERROR_CODES.BAD_REQUEST });
+        if (user.forgotPasswordToken !== token) {
+            return NextResponse.json({ message: "Invalid token" }, { status: HTTP_ERROR_CODES.UNAUTHORIZED });
         }
-        const hashedforgotPasswordToken = await bycrptjs.hash(user.id.toString(), 10);
-        const forgotPasswordTokenExpiry = Date.now() + 3 * 60 * 60 * 1000; // 3 hours
+        const newPassword = await bycrptjs.hash(password, 10);
         await prisma.user.update({
             where: {
                 id: user.id,
             },
             data: {
-                forgotPasswordToken: hashedforgotPasswordToken,
-                forgotPasswordTokenExpiry: new Date(forgotPasswordTokenExpiry),
+                password: newPassword,
+                forgotPasswordToken: null,
+                forgotPasswordTokenExpiry: null,
             },
         });
         return NextResponse.json({ message: "Forgot password token created successfully" }, { status: HTTP_ERROR_CODES.OK });
