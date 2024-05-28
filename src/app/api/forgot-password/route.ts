@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/database/db";
 import { HTTP_ERROR_CODES } from "@/enums/enum";
-import { sendEmail } from "@/helpers/Email/sendEmail";
+// import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
 export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
@@ -20,6 +20,9 @@ export const POST = async (request: NextRequest) => {
         if (!user) {
             return NextResponse.json({ message: "User not found" }, { status: HTTP_ERROR_CODES.NOT_FOUND });
         }
+        if (user.isverified === false) {
+            return NextResponse.json({ message: "User is not verified" }, { status: HTTP_ERROR_CODES.UNAUTHORIZED });
+        }
         if (user.forgotPasswordTokenExpiry && user.forgotPasswordTokenExpiry < new Date()) {
             return NextResponse.json({ message: "Token is expired" }, { status: HTTP_ERROR_CODES.BAD_REQUEST });
         }
@@ -34,7 +37,7 @@ export const POST = async (request: NextRequest) => {
                 forgotPasswordTokenExpiry: new Date(forgotPasswordTokenExpiry),
             },
         });
-        await sendEmail({ email: user.email, emailType: "FORGOT_PASSWORD", verifyLink: `${process.env.NEXT_PUBLIC_URL}/forgot-password/verify?token=${hashedforgotPasswordToken}` });
+        // await sendEmail({ email: user.email, emailType: "FORGOT_PASSWORD", verifyLink: `${process.env.NEXT_PUBLIC_URL}/forgot-password/verify?token=${hashedforgotPasswordToken}` });
         return NextResponse.json({ message: "Forgot password token created successfully" }, { status: HTTP_ERROR_CODES.OK });
     } catch (error) {
         console.log(error);

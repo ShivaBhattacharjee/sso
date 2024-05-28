@@ -7,7 +7,7 @@ import { prisma } from "@/database/db";
 import { HTTP_ERROR_CODES } from "@/enums/enum";
 import { env } from "@/env";
 import { isValidEmail } from "@/helpers/Email/EmailRegex";
-import { sendEmail } from "@/helpers/Email/sendEmail";
+// import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
 
 export const POST = async (request: NextRequest) => {
@@ -49,8 +49,21 @@ export const POST = async (request: NextRequest) => {
 
         const token = jwt.sign(tokenData, env.JWT_TOKEN, { expiresIn: "2y" });
         const url = `${redirectUrl}?token=${token}`;
-        await sendEmail({ email: user.email, emailType: "LOGIN" });
-        return NextResponse.json({ message: "Login success", token: token, redirect: redirectUrl && url }, { status: HTTP_ERROR_CODES.OK });
+        // If a redirect URL is present, set the cookie for the redirect URL too
+        if (redirectUrl) {
+            const redirectResponse = NextResponse.redirect(url, { status: HTTP_ERROR_CODES.OK });
+            redirectResponse.cookies.set("token", token, {
+                maxAge: 60 * 60 * 24 * 365 * 2,
+            });
+            return redirectResponse;
+        }
+
+        // await sendEmail({ email: user.email, emailType: "LOGIN" });
+        const response = NextResponse.json({ message: "Login success", token: token, redirect: redirectUrl && url }, { status: HTTP_ERROR_CODES.OK });
+        response.cookies.set("token", token, {
+            maxAge: 60 * 60 * 24 * 365 * 2,
+        });
+        return response;
     } catch (error) {
         const ErrorMsg = error as ErrorType;
         console.log(error);

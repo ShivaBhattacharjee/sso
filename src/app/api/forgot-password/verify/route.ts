@@ -17,6 +17,12 @@ export const POST = async (request: NextRequest) => {
         if (!user) {
             return NextResponse.json({ message: "User not found" }, { status: HTTP_ERROR_CODES.NOT_FOUND });
         }
+        if (user.isverified === false) {
+            return NextResponse.json({ message: "User is not verified" }, { status: HTTP_ERROR_CODES.UNAUTHORIZED });
+        }
+        if (user.forgotPasswordTokenExpiry && user.forgotPasswordTokenExpiry < new Date()) {
+            return NextResponse.json({ message: "Token is expired" }, { status: HTTP_ERROR_CODES.BAD_REQUEST });
+        }
         if (user.forgotPasswordToken !== token) {
             return NextResponse.json({ message: "Invalid token" }, { status: HTTP_ERROR_CODES.UNAUTHORIZED });
         }

@@ -1,11 +1,38 @@
 "use client";
 import React, { useState } from "react";
+import { ClipLoader } from "react-spinners";
+import axios from "axios";
 import { Eye, EyeOff, GithubIcon } from "lucide-react";
 import Link from "next/link";
 
-import Google from "@/components/ui/shared/Google";
+import Google from "@/components/shared/Google";
+import { useToast } from "@/components/ui/use-toast";
+import { ErrorType } from "@/types/ErrorType";
 const Login = () => {
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { toast } = useToast();
+    const bodyParams = {
+        email: email,
+        password: password,
+    };
+
+    const handleSubmit = async () => {
+        try {
+            setIsLoading(true);
+            const res = await axios.post("/api/login", bodyParams);
+            console.log(res);
+            toast({ title: "Login Success", description: "You have successfully logged in" });
+        } catch (err) {
+            const ErrorMsg = err as ErrorType;
+            toast({ title: "Something went wrong", description: ErrorMsg.response?.data?.message || "Internal server error", variant: "destructive" });
+            console.log(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
     return (
         <section className="flex justify-center items-center min-h-screen p-4">
             <div className=" border-2 dark:border-white/10 border-black/10 md:w-1/2 lg:w-1/3 w-full rounded-md dark:bg-white/10 bg-black/10 min-h-96 h-auto">
@@ -14,12 +41,12 @@ const Login = () => {
                     <label htmlFor="email" className=" capitalize font-normal text-lg">
                         Email:
                     </label>
-                    <input type="text" placeholder="Enter your email" className=" border focus:outline-none border-white/10 p-4 rounded-md" />
+                    <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter your email" className=" border focus:outline-none border-white/10 p-4 rounded-md" />
                     <label htmlFor="password" className=" capitalize font-normal text-lg">
                         Password:
                     </label>
                     <div className="flex items-center gap-3 border dark:border-white/10 border-black/10 p-4 rounded-md dark:bg-black/30 bg-white">
-                        <input type={`${isShowPassword ? "text" : "password"}`} placeholder="Enter your password" className=" focus:outline-none w-[93%] bg-transparent " />
+                        <input onChange={(e) => setPassword(e.target.value)} type={`${isShowPassword ? "text" : "password"}`} placeholder="Enter your password" className=" focus:outline-none w-[93%] bg-transparent " />
                         <div onClick={() => setIsShowPassword(!isShowPassword)}>{isShowPassword ? <EyeOff /> : <Eye />}</div>
                     </div>
                     <Link href={"/forgot-password"} className=" underline mb-1 text-lg">
@@ -37,7 +64,15 @@ const Login = () => {
                             <span className=" text-center uppercase font-medium">Github</span>
                         </button>
                     </div>
-                    <button className=" mb-2 dark:hover:bg-transparent hover:border-2 dark:hover:border-white duration-200 dark:hover:text-white p-2 text-black bg-white w-full rounded-md font-semibold">Submit</button>
+                    {isLoading ? (
+                        <button className=" mb-2 duration-200 p-2 text-black bg-white w-full rounded-md font-semibold flex items-center gap-3 justify-center">
+                            <ClipLoader size={20} /> Loading
+                        </button>
+                    ) : (
+                        <button onClick={handleSubmit} className=" mb-2 dark:hover:bg-transparent hover:border-2 dark:hover:border-white duration-200 dark:hover:text-white p-2 text-black bg-white w-full rounded-md font-semibold">
+                            Submit
+                        </button>
+                    )}
                     <div className="flex justify-center text-lg gap-2">
                         <h1>Dont Have An Account?</h1>
                         <Link href="/register" className=" underline">

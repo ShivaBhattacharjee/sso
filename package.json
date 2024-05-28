@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "email:dev" : "email dev",
+    "email:dev": "email dev",
     "prisma:generate": "bunx dotenv -e .env -- prisma generate",
     "migrate:dev": "bunx dotenv -e .env -- prisma migrate dev",
     "prisma:studio": "bunx dotenv -e .env -- prisma studio",
@@ -32,6 +32,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-email": "2.1.4",
+    "react-spinners": "^0.13.8",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"

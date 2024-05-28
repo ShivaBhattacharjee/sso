@@ -15,10 +15,11 @@ type EmailProps = {
 export const sendEmail = async ({ email, emailType, verifyLink }: EmailProps) => {
     try {
         const transport = nodemailer.createTransport({
-            service: process.env.NEXT_PUBLIC_EMAIL_SERVICE,
+            host: "smtp.ethereal.email",
+            port: 587,
             auth: {
-                user: process.env.NEXT_PUBLIC_EMAIL,
-                pass: process.env.NEXT_PUBLIC_EMAIL_PASSWORD,
+                user: "guiseppe79@ethereal.email",
+                pass: "rYjW4mC9byu7DRmCSB",
             },
         });
         let renderHtml = "";
