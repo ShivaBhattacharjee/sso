@@ -1,8 +1,9 @@
 import bycrptjs from "bcryptjs";
-import { NextRequest,NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/database/db";
 import { HTTP_ERROR_CODES } from "@/enums/enum";
+import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
 export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
@@ -30,6 +31,7 @@ export const POST = async (request: NextRequest) => {
                 forgotPasswordTokenExpiry: null,
             },
         });
+        await sendEmail({ email: user.email, emailType: "PASSWORD_RESET_SUCCESS" });
         return NextResponse.json({ message: "Forgot password token created successfully" }, { status: HTTP_ERROR_CODES.OK });
     } catch (error) {
         console.log(error);

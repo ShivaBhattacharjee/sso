@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/database/db";
 import { HTTP_ERROR_CODES } from "@/enums/enum";
-import { isValidEmail } from "@/helpers/EmailRegex";
+import { isValidEmail } from "@/helpers/Email/EmailRegex";
+import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
 export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
@@ -49,6 +50,8 @@ export const POST = async (request: NextRequest) => {
                 verificationTokenExpiry: new Date(verifyTokenExpiry),
             },
         });
+
+        await sendEmail({ email: user.email, emailType: "REGISTER", verifyLink: `${process.env.NEXT_PUBLIC_URL}/verify?token=${hashedToken}` });
 
         return NextResponse.json({ message: "User created successfully" }, { status: HTTP_ERROR_CODES.OK });
     } catch (error) {

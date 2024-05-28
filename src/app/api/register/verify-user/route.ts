@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/database/db";
 import { HTTP_ERROR_CODES } from "@/enums/enum";
+import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
 
 export const POST = async (request: NextRequest) => {
@@ -61,6 +62,7 @@ export const POST = async (request: NextRequest) => {
                 verificationTokenExpiry: null,
             },
         });
+        await sendEmail({ email: user.email, emailType: "VERIFIED_EMAIL" });
         return NextResponse.json(
             {
                 message: "User verified successfully",

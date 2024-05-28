@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "email:dev" : "email dev",
     "prisma:generate": "bunx dotenv -e .env -- prisma generate",
     "migrate:dev": "bunx dotenv -e .env -- prisma migrate dev",
     "prisma:studio": "bunx dotenv -e .env -- prisma studio",
@@ -16,8 +17,12 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@radix-ui/react-toast": "^1.1.5",
+    "@react-email/components": "0.0.19",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
@@ -26,7 +31,9 @@
     "prisma": "^5.14.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-hot-toast": "^2.4.1",
+    "react-email": "2.1.4",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
   },
   "devDependencies": {

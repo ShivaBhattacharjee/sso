@@ -6,6 +6,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/database/db";
 import { HTTP_ERROR_CODES } from "@/enums/enum";
 import { env } from "@/env";
+import { isValidEmail } from "@/helpers/Email/EmailRegex";
+import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
 
 export const POST = async (request: NextRequest) => {
@@ -19,6 +21,10 @@ export const POST = async (request: NextRequest) => {
         }
         if (password.length < 6) {
             return NextResponse.json({ message: "Password must be at least 6 characters" }, { status: HTTP_ERROR_CODES.BAD_REQUEST });
+        }
+        const emailValidity = isValidEmail(email);
+        if (!emailValidity) {
+            return NextResponse.json({ message: "Invalid email regex", emailValidity }, { status: HTTP_ERROR_CODES.BAD_REQUEST });
         }
         const user = await prisma.user.findUnique({
             where: {
@@ -43,6 +49,7 @@ export const POST = async (request: NextRequest) => {
 
         const token = jwt.sign(tokenData, env.JWT_TOKEN, { expiresIn: "2y" });
         const url = `${redirectUrl}?token=${token}`;
+        await sendEmail({ email: user.email, emailType: "LOGIN" });
         return NextResponse.json({ message: "Login success", token: token, redirect: redirectUrl && url }, { status: HTTP_ERROR_CODES.OK });
     } catch (error) {
         const ErrorMsg = error as ErrorType;
