@@ -6,6 +6,7 @@ import { HTTP_ERROR_CODES } from "@/enums/enum";
 import { isValidEmail } from "@/helpers/Email/EmailRegex";
 import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
+
 export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
     const { username, email, password, name } = reqBody;

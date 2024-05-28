@@ -19,10 +19,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${inter.className} dark:bg-black bg-white`}>
-                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                    {children}
+            <body className={`${inter.className} dark:bg-black bg-white min-h-screen dark:text-white text-black `}>
+                <ThemeProvider enableColorScheme={true} attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                     <Toaster />
+                    {children}
                 </ThemeProvider>
             </body>
         </html>
