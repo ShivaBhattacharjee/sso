@@ -6,21 +6,35 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:generate": "bunx dotenv -e .env -- prisma generate",
+    "migrate:dev": "bunx dotenv -e .env -- prisma migrate dev",
+    "prisma:studio": "bunx dotenv -e .env -- prisma studio",
+    "migrate": "bunx dotenv -e .env -- prisma migrate deploy",
+    "build:production": "bunx dotenv -e .env -- bun run migrate && bun install && bun run build && bun start",
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "next": "14.2.3",
+    "next-themes": "^0.3.0",
+    "nodemailer": "^6.9.13",
+    "prisma": "^5.14.0",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.3"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }
