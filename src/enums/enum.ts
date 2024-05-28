@@ -1,0 +1,8 @@
+export const HTTP_ERROR_CODES = {
+    OK: 200,
+    INTERNAL_SEVER_ERROR: 500,
+    NOT_FOUND: 404,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    CONFLICT: 409,
+};
