@@ -4,7 +4,7 @@ import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import { Eye, EyeOff, GithubIcon } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import Google from "@/components/shared/Google";
 import { useToast } from "@/components/ui/use-toast";
@@ -17,6 +17,7 @@ const Login = () => {
     const [password, setPassword] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { toast } = useToast();
+    const router = useRouter();
     const bodyParams = {
         name: name,
         username: username,
@@ -33,7 +34,7 @@ const Login = () => {
             const res = await axios.post("/api/register", bodyParams);
             console.log(res);
             toast({ title: "Account created successfully", description: "Please login to continue" });
-            redirect("/register/verify-email");
+            router.push("/register/verify-email");
         } catch (err) {
             console.log(err);
             const errorMsg = err as ErrorType;
