@@ -20,6 +20,10 @@ const Login = () => {
     };
 
     const handleSubmit = async () => {
+        if (!email || !password) {
+            toast({ title: "Error", description: "Please fill all the fields", variant: "destructive" });
+            return;
+        }
         try {
             setIsLoading(true);
             const res = await axios.post("/api/login", bodyParams);
