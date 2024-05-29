@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/database/db";
 import { HTTP_ERROR_CODES } from "@/enums/enum";
+import { isValidEmail } from "@/helpers/Email/EmailRegex";
 // import { sendEmail } from "@/helpers/Email/sendEmail";
 import { ErrorType } from "@/types/ErrorType";
 export const POST = async (request: NextRequest) => {
@@ -12,6 +13,7 @@ export const POST = async (request: NextRequest) => {
         return NextResponse.json({ message: "Email body params is required" }, { status: HTTP_ERROR_CODES.UNAUTHORIZED });
     }
     try {
+        isValidEmail(email);
         const user = await prisma.user.findUnique({
             where: {
                 email: email,
@@ -38,7 +40,7 @@ export const POST = async (request: NextRequest) => {
             },
         });
         // await sendEmail({ email: user.email, emailType: "FORGOT_PASSWORD", verifyLink: `${process.env.NEXT_PUBLIC_URL}/forgot-password/verify?token=${hashedforgotPasswordToken}` });
-        return NextResponse.json({ message: "Forgot password token created successfully" }, { status: HTTP_ERROR_CODES.OK });
+        return NextResponse.json({ message: `Email sent to ${email} please verify your identity to reset ` }, { status: HTTP_ERROR_CODES.OK });
     } catch (error) {
         console.log(error);
         const ErrorMsg = error as ErrorType;

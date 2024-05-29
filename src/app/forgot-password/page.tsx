@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import { useToast } from "@/components/ui/use-toast";
 import { ErrorType } from "@/types/ErrorType";
@@ -9,6 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { toast } = useToast();
+    const router = useRouter();
     const handleRequestResetPassword = async () => {
         if (!email) {
             toast({ title: "Error", description: "Please enter your email", variant: "destructive" });
@@ -19,6 +21,7 @@ const Login = () => {
             const res = await axios.post("/api/forgot-password", { email: email });
             console.log(res);
             toast({ title: "Success", description: res.data.message });
+            router.push("/login");
         } catch (error) {
             const ErrorMsg = error as ErrorType;
             toast({ title: "Error", description: ErrorMsg.response?.data?.message || "Internal server error", variant: "destructive" });
