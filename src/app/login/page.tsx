@@ -4,15 +4,22 @@ import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import { Eye, EyeOff, GithubIcon } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import Google from "@/components/shared/Google";
 import { useToast } from "@/components/ui/use-toast";
 import { ErrorType } from "@/types/ErrorType";
+
 const Login = () => {
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get("redirectUrl");
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const router = useRouter();
+
     const { toast } = useToast();
     const bodyParams = {
         email: email,
@@ -26,9 +33,13 @@ const Login = () => {
         }
         try {
             setIsLoading(true);
-            const res = await axios.post("/api/login", bodyParams);
+            const res = await axios.post(`${redirectUrl ? `/api/login?redirectUrl=${redirectUrl}` : "/api/login"}`, bodyParams);
             console.log(res);
+            console.log(redirectUrl);
             toast({ title: "Login Success", description: "You have successfully logged in" });
+            if (res.data.redirectUrl && res?.data?.redirectUrl) {
+                router.push(res.data.redirectUrl);
+            }
         } catch (err) {
             const ErrorMsg = err as ErrorType;
             toast({ title: "Something went wrong", description: ErrorMsg.response?.data?.message || "Internal server error", variant: "destructive" });
@@ -39,7 +50,7 @@ const Login = () => {
     };
     return (
         <section className="flex justify-center items-center min-h-screen p-4">
-            <div className=" border-2 dark:border-white/10 border-black/10 md:w-1/2 lg:w-1/3 w-full rounded-md dark:bg-white/10 bg-black/10 min-h-96 h-auto">
+            <div className=" border-2 shadow-lg dark:shadow-white/10 dark:border-white/10 border-black/10 md:w-1/2 lg:w-1/3 w-full rounded-md dark:bg-white/10 bg-black/10 min-h-96 h-auto">
                 <div className="flex flex-col gap-3 h-full p-3">
                     <h1 className=" text-xl uppercase font-bold text-center">Login</h1>
                     <label htmlFor="email" className=" capitalize font-normal text-lg">
@@ -78,10 +89,16 @@ const Login = () => {
                         </button>
                     )}
                     <div className="flex justify-center text-lg gap-2">
-                        <h1>Dont Have An Account?</h1>
-                        <Link href="/register" className=" underline">
-                            Register
-                        </Link>
+                        <h1>Dont have an account?</h1>
+                        {redirectUrl ? (
+                            <Link href={`/register?redirectUrl=${redirectUrl}`} className=" underline">
+                                Register
+                            </Link>
+                        ) : (
+                            <Link href="/register" className=" underline">
+                                Register
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

@@ -4,12 +4,14 @@ import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import { Eye, EyeOff, GithubIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Google from "@/components/shared/Google";
 import { useToast } from "@/components/ui/use-toast";
 import { ErrorType } from "@/types/ErrorType";
 const Login = () => {
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get("redirectUrl");
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
     const [name, setName] = useState<string>("");
     const [username, setUsername] = useState<string>("");
@@ -91,9 +93,15 @@ const Login = () => {
                     )}
                     <div className="flex justify-center text-lg gap-2">
                         <h1>Already have an account?</h1>
-                        <Link href="/login" className=" underline">
-                            Login
-                        </Link>
+                        {redirectUrl ? (
+                            <Link href={`/login?redirectUrl=${redirectUrl}`} className=" underline">
+                                Login
+                            </Link>
+                        ) : (
+                            <Link href="/login" className=" underline">
+                                Login
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
