@@ -1,17 +1,23 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { ErrorType } from "@/types/ErrorType";
 
-export function GET() {
+export function GET(request: NextRequest) {
     const cookieStore = cookies();
-
+    const { searchParams } = new URL(request.url);
+    const redirectUrl = searchParams.get("redirectUrl");
     try {
         // const response = NextResponse.json({
         //     message: "Logout Successful",
         //     success: true,
         // });
-
+        if (redirectUrl) {
+            // const response = NextResponse.json({ message: "Login success", token: token, redirectUrl: url }, { status: HTTP_ERROR_CODES.OK });
+            const Nextresponse = NextResponse.json(redirectUrl);
+            Nextresponse.cookies.delete("token");
+            return Nextresponse;
+        }
         const token = cookieStore.get("token");
 
         if (token === undefined || token === null) {
