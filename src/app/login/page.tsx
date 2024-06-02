@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -48,6 +49,11 @@ const Login = () => {
             setIsLoading(false);
         }
     };
+    useEffect(() => {
+        if (getCookie("token")) {
+            router.push("/logout");
+        }
+    }, []);
     return (
         <section className="flex justify-center items-center min-h-screen p-4">
             <div className=" border-2 shadow-lg dark:shadow-white/10 dark:border-white/10 border-black/10 md:w-1/2 lg:w-1/3 w-full rounded-md dark:bg-white/10 bg-black/10 min-h-96 h-auto">
