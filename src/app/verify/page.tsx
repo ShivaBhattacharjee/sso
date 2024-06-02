@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { MoonLoader } from "react-spinners";
 import axios from "axios";
@@ -33,30 +33,32 @@ const Page = () => {
     }, []);
 
     return (
-        <div>
-            {loading && (
-                <div className="flex justify-center text-white items-center min-h-screen">
-                    <MoonLoader size={40} color="white" />
-                </div>
-            )}
-            <>
-                {isVerified ? (
-                    <>
-                        <Confetti width={globalThis.innerWidth > 600 ? 800 : globalThis.innerWidth} className=" lg:m-auto" />
-                        <div className="flex flex-col justify-center text-white items-center min-h-screen">
-                            <h1 className="text-2xl">Your account has been verified</h1>
-                            <Link href={"/login"} className=" w-44 rounded-md text-center font-normal dark:bg-white dark:text-black text-white bg-black p-2">
-                                Login
-                            </Link>
-                        </div>
-                    </>
-                ) : (
-                    <div className="flex justify-center text-red-500 items-center min-h-screen">
-                        <h1 className="text-2xl">Invalid token</h1>
+        <Suspense fallback={<>Loading...</>}>
+            <div>
+                {loading && (
+                    <div className="flex justify-center text-white items-center min-h-screen">
+                        <MoonLoader size={40} color="white" />
                     </div>
                 )}
-            </>
-        </div>
+                <>
+                    {isVerified ? (
+                        <>
+                            <Confetti width={globalThis.innerWidth > 600 ? 800 : globalThis.innerWidth} className=" lg:m-auto" />
+                            <div className="flex flex-col justify-center text-white items-center min-h-screen">
+                                <h1 className="text-2xl">Your account has been verified</h1>
+                                <Link href={"/login"} className=" w-44 rounded-md text-center font-normal dark:bg-white dark:text-black text-white bg-black p-2">
+                                    Login
+                                </Link>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="flex justify-center text-red-500 items-center min-h-screen">
+                            <h1 className="text-2xl">Invalid token</h1>
+                        </div>
+                    )}
+                </>
+            </div>
+        </Suspense>
     );
 };
 
