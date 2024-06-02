@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -22,7 +23,7 @@ export default function RootLayout({
             <body className={`${inter.className} dark:bg-black bg-white min-h-screen dark:text-white text-black `}>
                 <ThemeProvider enableColorScheme={true} attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                     <Toaster />
-                    {children}
+                    <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
                 </ThemeProvider>
             </body>
         </html>
