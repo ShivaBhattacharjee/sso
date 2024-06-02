@@ -9,7 +9,7 @@ import { ThemeProvider } from "@/context/themeprovider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "TEST SSO",
+    title: "SSO auth login system",
 };
 
 export default function RootLayout({

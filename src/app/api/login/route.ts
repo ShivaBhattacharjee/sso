@@ -56,7 +56,7 @@ export const POST = async (request: NextRequest) => {
             });
             return response;
         }
-        sendEmail({ email: user.email, emailType: "LOGIN" });
+        await sendEmail({ email: user.email, emailType: "LOGIN" });
         const response = NextResponse.json({ message: "Login success", token: token }, { status: HTTP_ERROR_CODES.OK });
         response.cookies.set("token", token, {
             httpOnly: false,

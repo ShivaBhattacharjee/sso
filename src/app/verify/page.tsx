@@ -4,23 +4,17 @@ import Confetti from "react-confetti";
 import { MoonLoader } from "react-spinners";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import { useToast } from "@/components/ui/use-toast";
 import { ErrorType } from "@/types/ErrorType";
 const Page = () => {
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
-    const router = useRouter();
     const { toast } = useToast();
     const [loading, setLoading] = useState<boolean>(true);
     const [isVerified, setIsVerified] = useState<boolean>(false);
     const handleVerify = async () => {
-        if (!token) {
-            toast({ title: "Error", description: "Invalid token", variant: "destructive" });
-            router.push("/");
-            return;
-        }
         try {
             const res = await axios.post("/api/register/verify-user", { token: token });
             console.log(res);
