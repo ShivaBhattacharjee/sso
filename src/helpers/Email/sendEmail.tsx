@@ -18,8 +18,8 @@ export const sendEmail = async ({ email, emailType, verifyLink }: EmailProps) =>
             host: "smtp.ethereal.email",
             port: 587,
             auth: {
-                user: "guiseppe79@ethereal.email",
-                pass: "rYjW4mC9byu7DRmCSB",
+                user: "ulices25@ethereal.email",
+                pass: "C44y7E96THpKHS57pZ",
             },
         });
         let renderHtml = "";
@@ -37,7 +37,7 @@ export const sendEmail = async ({ email, emailType, verifyLink }: EmailProps) =>
         const mailOptions = {
             from: `${process.env.NEXT_PUBLIC_EMAIL!}`,
             to: email,
-            subject: emailType === "VERIFY_USER" ? "Please Verify Your Account" : "Reset Your Password",
+            subject: emailType === "LOGIN" ? "Login" : emailType === "REGISTER" ? "Register" : emailType === "FORGOT_PASSWORD" ? "Forgot Password" : emailType === "PASSWORD_RESET_SUCCESS" ? "Password Reset Success" : "Verified Email",
             html: renderHtml,
         };
 

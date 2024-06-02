@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
-import { Eye, EyeOff, GithubIcon } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-import Google from "@/components/shared/Google";
+// import Google from "@/components/shared/Google";
 import { useToast } from "@/components/ui/use-toast";
 import { ErrorType } from "@/types/ErrorType";
 
@@ -67,7 +67,7 @@ const Login = () => {
                     <Link href={"/forgot-password"} className=" underline mb-1 text-lg">
                         Forgot Password?
                     </Link>
-                    <div className="flex justify-between gap-3">
+                    {/* <div className="flex justify-between gap-3">
                         <button className="border-2 justify-center gap-3 flex items-center dark:border-white/10 border-black/10 dark:hover:bg-white/10 dark:bg-black/10 bg-black duration-200 text-white w-full rounded-lg p-3">
                             <div className=" w-6">
                                 <Google />
@@ -78,7 +78,7 @@ const Login = () => {
                             <GithubIcon />
                             <span className=" text-center uppercase font-medium">Github</span>
                         </button>
-                    </div>
+                    </div> */}
                     {isLoading ? (
                         <button className=" mb-2 duration-200 p-2 text-black bg-white w-full rounded-md font-semibold flex items-center gap-3 justify-center">
                             <ClipLoader size={20} /> Loading

@@ -1,13 +1,12 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { setCookie } from "cookies-next";
 import jwt from "jsonwebtoken";
 
 const Page = () => {
     const router = useRouter();
     const getparams = useSearchParams();
-    const token = getparams.get("token") || ""; // Provide a default value for token
+    const token = getparams.get("token") || "";
 
     useEffect(() => {
         const verifyToken = async () => {
@@ -19,7 +18,6 @@ const Page = () => {
 
             try {
                 jwt.decode(token);
-                setCookie("token", token, { maxAge: 60 * 60 * 24 * 30 });
                 router.push("/");
             } catch (e) {
                 console.error(e);

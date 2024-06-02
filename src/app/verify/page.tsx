@@ -32,13 +32,12 @@ const Page = () => {
             const ErrorMsg = error as ErrorType;
             toast({ title: "Error", description: ErrorMsg.response?.data?.message || "Something went wrong", variant: "destructive" });
             setLoading(false);
-        } finally {
-            setLoading(false);
         }
     };
     useEffect(() => {
         handleVerify();
-    }, [token]);
+    }, []);
+
     return (
         <div>
             {loading && (
