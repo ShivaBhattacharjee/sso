@@ -48,14 +48,12 @@ export const POST = async (request: NextRequest) => {
         const token = jwt.sign(tokenData, env.JWT_TOKEN, { expiresIn: "2y" });
         const url = `${redirectUrl}?token=${token}`;
         if (token && redirectUrl) {
-            // const response = NextResponse.json({ message: "Login success", token: token, redirectUrl: url }, { status: HTTP_ERROR_CODES.OK });
-            const Nextresponse = NextResponse.json(url);
-            Nextresponse.cookies.set("token", token, {
-                httpOnly: false,
-                maxAge: 60 * 60 * 24 * 365 * 2, // 2 years
-            });
-            return Nextresponse;
+            const newHeaders = new Headers(request.headers);
+            newHeaders.set("token", token);
+            const response = NextResponse.json({ message: "Login success", token: token, redirectUrl: url }, { status: HTTP_ERROR_CODES.OK });
+            return response;
         }
+
         await sendEmail({ email: user.email, emailType: "LOGIN" });
         const response = NextResponse.json({ message: "Login success", token: token }, { status: HTTP_ERROR_CODES.OK });
         response.cookies.set("token", token, {
