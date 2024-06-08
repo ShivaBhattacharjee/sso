@@ -40,6 +40,7 @@
   - [Installation](#installation)
   - [Local](#local)
   - [Prisma studio](#prisma-studio)
+  - [React-Email Dev Mode](#react-email-dev-mode)
 - [Host your own](#host-your-own)
 - [Contributing](#contributing)
   - [Creating A Pull Request](#creating-a-pull-request)
@@ -99,6 +100,12 @@ Server will start at http://localhost:3000/
 ### Prisma studio
 ```
 bun prisma:studio
+```
+
+### React-Email Dev Mode 
+
+```bash
+bun email:dev
 ```
 
 
