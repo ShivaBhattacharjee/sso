@@ -1,20 +1,23 @@
 <a href="https://github.com/ShivaBhattacharjee/SSO">
 <p align="center">
+    <img src="https://github.com/ShivaBhattacharjee/sso/assets/95211406/8c54dce4-3578-4e91-90b7-d4fe1e5bea63" width="240px"  alt="animetrix logo" align="center">
+  </a>
 <br/>
   <h3 align="center">SSO</h3>
 
-
 <div align="center" >
 
+
+
+
 ![NextJs](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-
+![jwt token](http://jwt.io/img/badge-compatible.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-![GitHub repo size](https://img.shields.io/github/repo-size/shivabhattacharjee/SSO)
-
+![GitHub repo size](https://img.shields.io/github/repo-size/shivabhattacharjee/sso)
 
 
   </div>
+
   <p align="center">
     A Single Sign-On (SSO) system built with Next.js, PostgreSQL, Prisma, and Tailwind CSS.
     <br/>
@@ -45,11 +48,13 @@
 - [License](#license)
 - [ScreenShots](#screenshots)
   - [Login](#login)
+  - [Register](#register)
     - [Visit SSO](#visit-sso)
 - [Authors](#authors)
 
 ## About The Project
-![Screenshot (1009)](https://github.com/ShivaBhattacharjee/SSO/assets/95211406/d872a750-4fa9-4a31-8a13-71f859ab8cf9)
+![image](https://github.com/ShivaBhattacharjee/sso/assets/95211406/1ec7a2fd-eb07-4180-be05-9cb478249b4c)
+
 
 SSO is a Single Sign-On (SSO) system that allows users to seamlessly authenticate across multiple applications using a single set of credentials. Built with Next.js, PostgreSQL, Prisma, and Tailwind CSS, SSO offers a secure and efficient way to manage user authentication.
 
@@ -153,7 +158,11 @@ Distributed under the Apache License 2.0. See [LICENSE](https://github.com/Shiva
 ## ScreenShots
 
 ### Login
-![Screenshot from 2023-11-09 21-54-28](https://github.com/ShivaBhattacharjee/SSO/assets/95211406/ea8de1b1-4895-48e7-a98a-7b46386c14bd)
+![image](https://github.com/ShivaBhattacharjee/sso/assets/95211406/65a1f562-2525-46ab-a2be-b959e12ba5b7)
+
+### Register
+![image](https://github.com/ShivaBhattacharjee/sso/assets/95211406/fc269476-88d1-4dc6-b3be-42181e6dfa35)
+
 
 #### Visit <a href = "http://demosso.theshiva.xyz/" target="_blank">SSO</a>
 
