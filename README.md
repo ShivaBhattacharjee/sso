@@ -39,6 +39,7 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Local](#local)
+    - [Update allowed domain after cloning](#update-allowed-domain-after-cloning)
   - [Prisma studio](#prisma-studio)
   - [React-Email Dev Mode](#react-email-dev-mode)
 - [Host your own](#host-your-own)
@@ -80,6 +81,19 @@ SSO is built using:
 
 ### Local
 ```Rename .env.example to .env.local and fill the required fields```
+
+#### Update allowed domain after cloning
+
+[middleware.ts](https://github.com/ShivaBhattacharjee/sso/blob/main/src/middleware.ts)
+
+Update this function
+
+```bash
+const isAllowedDomain = (hostname: string, port: string): boolean => {
+    return hostname.endsWith(".theshiva.xyz") || hostname === "theshiva.xyz" || (hostname === "localhost" && (port === "" || port === "3000"));
+};
+```
+
 ```bash
 git clone https://github.com/ShivaBhattacharjee/SSO
 ```
