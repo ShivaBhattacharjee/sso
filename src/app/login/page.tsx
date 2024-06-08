@@ -1,8 +1,7 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
-import { getCookie } from "cookies-next";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -49,11 +48,6 @@ const Login = () => {
             setIsLoading(false);
         }
     };
-    useEffect(() => {
-        if (getCookie("token")) {
-            router.push("/logout");
-        }
-    }, []);
     return (
         <Suspense fallback={<>Loading....</>}>
             <section className="flex justify-center items-center min-h-screen p-4">

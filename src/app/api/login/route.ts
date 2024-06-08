@@ -49,6 +49,7 @@ export const POST = async (request: NextRequest) => {
         const url = `${redirectUrl}?token=${token}`;
         if (token && redirectUrl) {
             const newHeaders = new Headers(request.headers);
+            await sendEmail({ email: user.email, emailType: "LOGIN" });
             newHeaders.set("token", token);
             const response = NextResponse.json({ message: "Login success", token: token, redirectUrl: url }, { status: HTTP_ERROR_CODES.OK });
             return response;
