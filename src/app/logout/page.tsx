@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";

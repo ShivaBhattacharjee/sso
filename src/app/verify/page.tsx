@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { MoonLoader } from "react-spinners";
 import axios from "axios";
