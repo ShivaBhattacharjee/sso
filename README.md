@@ -11,6 +11,7 @@
 
 
 ![NextJs](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+[![Deno](https://github.com/ShivaBhattacharjee/sso/actions/workflows/deno.yml/badge.svg)](https://github.com/ShivaBhattacharjee/sso/actions/workflows/deno.yml)
 ![jwt token](http://jwt.io/img/badge-compatible.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 ![GitHub repo size](https://img.shields.io/github/repo-size/shivabhattacharjee/sso)
@@ -40,6 +41,7 @@
   - [Installation](#installation)
   - [Local](#local)
     - [Update allowed domain after cloning](#update-allowed-domain-after-cloning)
+    - [Start db through docker](#start-db-through-docker)
   - [Prisma studio](#prisma-studio)
   - [React-Email Dev Mode](#react-email-dev-mode)
 - [Host your own](#host-your-own)
@@ -103,6 +105,13 @@ cd SSO
 ```
 bun install
 ```
+
+#### Start db through docker
+
+```bash
+docker compose up 
+```
+
 ```
 bun migrate:dev
 ```
