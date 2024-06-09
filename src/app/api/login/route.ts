@@ -1,6 +1,5 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/database/db";
@@ -49,9 +48,10 @@ export const POST = async (request: NextRequest) => {
         const token = jwt.sign(tokenData, env.JWT_TOKEN, { expiresIn: "2y" });
         const url = `${redirectUrl}?token=${token}`;
         if (token && redirectUrl) {
+            const newHeaders = new Headers(request.headers);
             await sendEmail({ email: user.email, emailType: "LOGIN" });
+            newHeaders.set("token", token);
             const response = NextResponse.json({ message: "Login success", token: token, redirectUrl: url }, { status: HTTP_ERROR_CODES.OK });
-            cookies().set("token", token, { path: "/", maxAge: 60 * 60 * 24 * 365 * 2, httpOnly: false, domain: `${process.env.COOKIE_DOMAIN} ||localhost` });
             return response;
         }
 
