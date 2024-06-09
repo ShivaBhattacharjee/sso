@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import { Suspense, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
