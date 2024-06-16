@@ -44,6 +44,7 @@
     - [Start db through docker](#start-db-through-docker)
   - [Prisma studio](#prisma-studio)
   - [React-Email Dev Mode](#react-email-dev-mode)
+- [Usage Demo](#usage-demo)
 - [Host your own](#host-your-own)
 - [Contributing](#contributing)
   - [Creating A Pull Request](#creating-a-pull-request)
@@ -132,7 +133,9 @@ bun email:dev
 ```
 
 
+## Usage Demo
 
+Visit this [REPO](https://github.com/ShivaBhattacharjee/sso-auth-demo) to get a grasp of implementing it in your own project.
 
 ## Host your own
 
