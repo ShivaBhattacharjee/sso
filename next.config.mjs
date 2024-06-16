@@ -3,7 +3,7 @@ const nextConfig = {
     experimental: {
         missingSuspenseWithCSRBailout: false,
     },
-    headers: async () => {
+    headers: () => {
         return [
             {
                 source: '/(.*)',
